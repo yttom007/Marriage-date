@@ -499,3 +499,31 @@ x = setInterval(function() {
   //     console.log("happy birthday");
   // }
 }, second);
+function togo(){
+  // Define the target date
+  const targetDate = new Date('Feb 3, 2025');
+
+// Get today's date
+  const today = new Date();
+
+  const { months, days } = calculateMonthDayDifference(today, targetDate);
+
+  return `${months} months and ${days} days to go`;
+}
+// Calculate the total number of full months and remaining days
+function calculateMonthDayDifference(startDate, endDate) {
+  // Start with the total number of months
+  let totalMonths = (endDate.getFullYear() - startDate.getFullYear()) * 12;
+  totalMonths += endDate.getMonth() - startDate.getMonth();
+
+  // Check if the end date's day is less than the start date's day
+  let days = endDate.getDate() - startDate.getDate();
+  if (days < 0) {
+    totalMonths -= 1; // Remove one month as it isn't complete
+    const previousMonth = new Date(endDate.getFullYear(), endDate.getMonth(), 0);
+    days += previousMonth.getDate(); // Add days from the previous month
+  }
+
+  return { months: totalMonths, days };
+}
+document.getElementById('goto').innerText = togo();
